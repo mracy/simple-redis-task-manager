@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RedisTasks</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/cerulean/bootstrap.min.css">
+    <style>
+        /* Styles for text fields */
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        /* Styles for buttons */
+        input[type="submit"] {
+            background-color: #1e90ff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* Styles for checkboxes */
+        input[type="checkbox"] {
+            margin-right: 10px;
+            transform: scale(1.5); /* Increase checkbox size */
+        }
+
+        /* Styles for labels */
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 18px; /* Increase font size */
+        }
+
+        /* Styles for list items */
+        .task-list {
+            display: flex;
+            flex-wrap: wrap;
+            margin-left: -10px; /* Adjust for default list-style padding */
+            margin-right: -10px; /* Adjust for default list-style padding */
+            list-style: none; /* Remove bullet points */
+            padding: 0;
+        }
+
+        .task-list li {
+            flex: 0 0 calc(50% - 20px); /* Two items per row with margin */
+            margin: 10px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            transition: background-color 0.3s ease;
+        }
+
+        .task-list li:hover {
+            background-color: #f0f0f0;
+        }
+
+        /* Styles for checked checkboxes */
+        input[type="checkbox"]:checked + label {
+            color: red; /* Change text color to red */
+        }
+
+        /* Styles for well boxes */
+        .well {
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        /* Styles for form headings */
+        h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        /* Styles for navbar */
+        .navbar-custom {
+            background-color: #1e90ff;
+        }
+
+        /* Styles for navbar brand */
+        .navbar-custom .navbar-brand {
+            color: white;
+        }
+
+        /* Add border to sections */
+        .task-section {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<!-- As a link -->
+<nav class="navbar navbar-custom bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">RedisTasks</a>
+    </div>
+</nav>
+
+<br>
+
+<div class="container">
+
+    <div class="task-section">
+        <h3> Add Task </h3>
+
+        <form method="post" action="/task/add">
+            <input type="text" name="task" placeholder="Add Task">
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+    <div class="task-section">
+        <h3> <%= title %> </h3>
+
+        <form method="post" action="/task/delete">
+            <ul class="task-list">
+                <% tasks.forEach(function(task) { %>
+                <li>
+                    <input type="checkbox" name="tasks" class="del" value="<%= task %>">
+                    <label><%= task %></label> <!-- Use label to associate with checkboxes -->
+                </li>
+                <% }); %>
+            </ul>
+            <input type="submit" value="Remove">
+        </form>
+    </div>
+
+    <div class="well">
+        <h3> Next Business Call</h3>
+        <p><strong>Name:</strong> <%=call.name %></p>
+        <p><strong>Company:</strong> <%=call.company %></p>
+        <p><strong>Phone:</strong> <%=call.phone %></p>
+        <p><strong>Time:</strong> <%=call.time %></p>
+    </div>
+
+    <div class="well">
+        <h3> Edit Next Call</h3>
+
+        <form method="post" action="/call/add">
+            <label> Contact Name</label>
+            <input type="text" name="name" placeholder="Task Name">
+            <label> Company</label>
+            <input type="text" name="company" placeholder="Company">
+            <label>Phone</label>
+            <input type="text" name="phone" placeholder="Phone">
+            <label>Day & Time</label>
+            <input type="text" name="time" placeholder="Time">
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</div>
+</body>
+</html>
